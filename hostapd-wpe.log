@@ -1,0 +1,8 @@
+
+
+mschapv2: Tue Mar  4 17:34:28 2025
+	 username:	test
+	 challenge:	16:9e:5b:8f:18:dd:92:ca
+	 response:	00:14:c9:91:98:09:79:aa:25:eb:91:10:94:3a:bf:57:2f:b3:57:b6:b4:c9:e9:7a
+	 jtr NETNTLM:		test:$NETNTLM$169e5b8f18dd92ca$0014c991980979aa25eb9110943abf572fb357b6b4c9e97a
+	 hashcat NETNTLM:	test::::0014c991980979aa25eb9110943abf572fb357b6b4c9e97a:169e5b8f18dd92ca

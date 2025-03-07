@@ -36,8 +36,12 @@ def mschapv2_encrypt(nt_hash_hex, challenge_hex):
     if len(nt_hash) != 16 or len(challenge) != 8:
         raise ValueError("NT hash must be 16 bytes, challenge must be 8 bytes.")
 
-    # Split the NT hash into three 7-byte chunks
-    keys = [nt_hash[i:i+7] for i in range(0, 16, 7)]
+    # Correctly split NT hash into three 7-byte chunks, padding the last one
+    keys = [
+        nt_hash[:7],            # First 7 bytes
+        nt_hash[7:14],          # Next 7 bytes
+        nt_hash[14:] + b'\x00' * (7 - len(nt_hash[14:]))  # Last 2 bytes + padding
+    ]
 
     # Encrypt the challenge with each key
     encrypted_blocks = [des_encrypt(challenge, adjust_des_key(k)) for k in keys]
@@ -49,10 +53,11 @@ def mschapv2_encrypt(nt_hash_hex, challenge_hex):
 
 # Example usage
 if __name__ == "__main__":
-    #nt_hash = "58a478135a93ac3bf058a5ea0e8fdb71"  # NT Hash of 'Password123'
-    #challenge = "169e5b8f18dd92ca"  # Example challenge (8 bytes)
-    nt_hash = "0cb6948805f797bf2a82807973b89537"  # NT Hash of 'test'
+#    nt_hash = "58a478135a93ac3bf058a5ea0e8fdb71"  # NT Hash of 'Password123'
+#    challenge = "169e5b8f18dd92ca"  # Example challenge (8 bytes)
+    nt_hash = "0cb6948805f797bf2a82807973b89537"  # NT Hash of 'Password123'
     challenge = "169e5b8f18dd92ca"  # Example challenge (8 bytes)
+
 
     response = mschapv2_encrypt(nt_hash, challenge)
     print(f"MSCHAPv2 Encrypted Response: {response}")
