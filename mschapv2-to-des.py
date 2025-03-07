@@ -1,4 +1,5 @@
 import re
+import ct3
 
 def parse_hostapd_wpe_log(file_path):
     """
@@ -28,6 +29,7 @@ def extract_des_blocks(response):
     enc1 = response[0:16]   # First 8-byte block (16 hex chars)
     enc2 = response[16:32] # Second 8-byte block (16 hex chars)
     enc3 = response[32:]   # Third 8-byte block (16 hex chars)
+    
     return [enc1, enc2, enc3]
 
 if __name__ == "__main__":
@@ -43,22 +45,27 @@ if __name__ == "__main__":
         # Extract all three DES-encrypted blocks
         encrypted_blocks = extract_des_blocks(response)
 
-        print("/usr/share/hashcat-utils/ct3_to_ntlm.bin " + encrypted_blocks[-1] + " " + challenge)
-        # print(k3)
-
         # Generate Hashcat mode 14000 format for each DES-encrypted block
-        hashcat_entries = [f"{challenge}:{block}" for block in encrypted_blocks]
+        hashcat_entries = [f"{challenge}:{block}" for block in encrypted_blocks[0:2]]
 
         print("\nHashcat Input Format (mode 14000):")
         for entry in hashcat_entries:
             print(entry)
+
+        #ct3 for k3 in encrypted_blocks[3]:
+        # CT3 encrypted data, Salt 
+        # print(encrypted_blocks[2])
+        print("\nReversing the K3 DES...")
+        enc3_clear = ct3.recover_key_from_ct3(encrypted_blocks[2], challenge )
+        # print(str(enc3_clear))
+        print("\nK3 of the NTLM hash was reversed to: " + enc3_clear )
 
         # Save to file for Hashcat input
         with open("hashcat_14000.txt", "w") as f:
             f.write("\n".join(hashcat_entries) + "\n")
 
         print("\nSaved to hashcat_14000.txt. Use this with hashcat mode 14000.")
-
+        
     except Exception as e:
         print("Error:", str(e))
 
