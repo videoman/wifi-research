@@ -25,9 +25,9 @@ def extract_des_blocks(response):
     Extracts three 8-byte DES encrypted blocks from the 24-byte response.
     """
     
-    enc1 = response[0:14]   # First 8-byte block (16 hex chars)
-    enc2 = response[14:28] # Second 8-byte block (16 hex chars)
-    enc3 = response[28:32]   # Third 8-byte block (16 hex chars)
+    enc1 = response[0:16]   # First 8-byte block (16 hex chars)
+    enc2 = response[16:32] # Second 8-byte block (16 hex chars)
+    enc3 = response[32:]   # Third 8-byte block (16 hex chars)
     return [enc1, enc2, enc3]
 
 if __name__ == "__main__":
