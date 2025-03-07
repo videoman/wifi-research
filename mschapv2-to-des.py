@@ -5,6 +5,32 @@ import argparse
 import os
 import sys
 
+'''
+Script made by some AI stuff, and idea from David M. N. Bryan (Aka VideoMan). 
+
+Enjoy!
+
+This came about, as you can replay an NT HASH against a radius server, and wanted
+a way to easily toss the hashes up on a hashcat cluster. This script creates a file with the two
+hashes that need to be cracked using hashcat in mode 14000 (two 7-byte DES encrypted blocks 
+with the challenge as the salt, and parity).
+
+Once you get the hashes back you will need to combine them all to one NTLM HASH.
+
+You can then make a wpa_suplicant.conf file that looks like: 
+network={
+        ssid="example"
+        scan_ssid=1
+        key_mgmt=WPA-EAP
+        eap=PEAP
+        identity="harold"
+        password="hash:e19ccf75ee54e06b06a5907af13cef42"
+        ca_cert="/etc/cert/ca.pem"
+        phase1="peaplabel=0"
+        phase2="auth=MSCHAPV2"
+}
+'''
+
 def parse_hostapd_wpe_log(file_path):
     """
     Parses the hostapd-wpe log file to extract MS-CHAPv2 credentials.
