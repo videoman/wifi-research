@@ -135,7 +135,7 @@ def main():
             f.write("\n".join(hashcat_entries) + "\n")
         
         print(f"[+] Saved Hashcat format to: {args.output_file}")
-        print(f"[*] Use with hashcat: hashcat -m 14000 -a 3 --hex-charset {args.output_file} -1 charsets/DES_full.charset ?1?1?1?1?1?1?1?1")
+        print(f"[*] Use with hashcat: hashcat -m 14000 -a 3 -1 charsets/DES_full.hcchr --hex-charset {args.output_file} ?1?1?1?1?1?1?1?1")
 
         # Process K3 if not skipped
         if not args.skip_k3:
