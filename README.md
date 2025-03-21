@@ -7,7 +7,7 @@ This program will extract the challege, and DES response and write them to a fil
 It uses the ct3.py program to crack the third part of the key (K3). 
 
 ## ct3.py thanks to EvilMog
-[EvilMog](https://github.com/evilmog) made the [ct3.py](https://github.com/evilmog/ntlmv1-multi) from a C+ program in [hashcat_utils] (https://github.com/hashcat/hashcat-utils/blob/master/src/ct3_to_ntlm.c).
+[EvilMog](https://github.com/evilmog) made the [ct3.py](https://github.com/evilmog/ntlmv1-multi) from a C+ program in [hashcat_utils](https://github.com/hashcat/hashcat-utils/blob/master/src/ct3_to_ntlm.c).
 
 None of this stuff is super ground breaking, but we have made it pretty easy to crack a PEAP challenge response. 
 EvilMog also has a bunch of fun stuff for NTLMv1 and other fun research.
